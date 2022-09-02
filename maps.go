@@ -27,18 +27,19 @@ func SortKeys[K constraints.Ordered, V any](m map[K]V) []K {
 	return keys
 }
 
-// KV is a Key Value pair.
-type KV[K constraints.Ordered, V any] struct {
-	K K
-	V V
+// KeyVal is a Key Value pair.
+type KeyVal[K constraints.Ordered, V any] struct {
+	Key K
+	Val V
 }
+type KeyVals[K constraints.Ordered, V any] []KeyVal[K, V]
 
 // Sort sorts a map by key, returning a slice of KV structs.
-func Sort[K constraints.Ordered, V any](m map[K]V) []KV[K, V] {
-	sorted := make([]KV[K, V], len(m))
+func SortByKeys[K constraints.Ordered, V any](m map[K]V) KeyVals[K, V] {
+	sorted := make(KeyVals[K, V], len(m))
 	keys := SortKeys(m)
 	for i, k := range keys {
-		sorted[i] = KV[K, V]{k, m[k]}
+		sorted[i] = KeyVal[K, V]{k, m[k]}
 	}
 	return sorted
 }
