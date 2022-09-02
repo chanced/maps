@@ -6,15 +6,6 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-type sortable[T constraints.Ordered] []T
-
-// Len implements sort.Interface
-func (x sortable[T]) Len() int               { return len(x) }
-func (x sortable[T]) Less(i int, j int) bool { return x[i] < x[j] }
-func (x sortable[T]) Swap(i int, j int)      { x[i], x[j] = x[j], x[i] }
-
-var _ sort.Interface = sortable[uint8]{}
-
 // SortKeys sorts the keys of a map.
 func SortKeys[K constraints.Ordered, V any](m map[K]V) []K {
 	keys := make([]K, len(m))
@@ -43,3 +34,11 @@ func SortByKeys[K constraints.Ordered, V any](m map[K]V) KeyVals[K, V] {
 	}
 	return sorted
 }
+
+type sortable[T constraints.Ordered] []T
+
+func (x sortable[T]) Len() int               { return len(x) }
+func (x sortable[T]) Less(i int, j int) bool { return x[i] < x[j] }
+func (x sortable[T]) Swap(i int, j int)      { x[i], x[j] = x[j], x[i] }
+
+var _ sort.Interface = (sortable[uint8])(nil)
