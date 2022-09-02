@@ -1,4 +1,4 @@
-# maps is a map utilities library
+# maps is a utilities library for go maps
 
 In current form the lib is incredibly small. I may build it up over time.
 
