@@ -1,4 +1,4 @@
-# maps is a map utilities library
+# maps is a map utility library
 
 In current form the lib is incredibly small. I may build it up over time.
 
