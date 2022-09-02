@@ -2,12 +2,14 @@ package maps
 
 import (
 	"sort"
-
-	"golang.org/x/exp/constraints"
 )
 
+type Ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~float32 | ~float64 | ~string
+}
+
 // SortKeys sorts the keys of a map.
-func SortKeys[K constraints.Ordered, V any](m map[K]V) []K {
+func SortKeys[K Ordered, V any](m map[K]V) []K {
 	keys := make([]K, len(m))
 	i := 0
 	for k := range m {
@@ -19,14 +21,14 @@ func SortKeys[K constraints.Ordered, V any](m map[K]V) []K {
 }
 
 // KeyVal is a Key Value pair.
-type KeyVal[K constraints.Ordered, V any] struct {
+type KeyVal[K Ordered, V any] struct {
 	Key K
 	Val V
 }
-type KeyVals[K constraints.Ordered, V any] []KeyVal[K, V]
+type KeyVals[K Ordered, V any] []KeyVal[K, V]
 
 // Sort sorts a map by key, returning a slice of KV structs.
-func SortByKeys[K constraints.Ordered, V any](m map[K]V) KeyVals[K, V] {
+func SortByKeys[K Ordered, V any](m map[K]V) KeyVals[K, V] {
 	sorted := make(KeyVals[K, V], len(m))
 	keys := SortKeys(m)
 	for i, k := range keys {
@@ -35,7 +37,7 @@ func SortByKeys[K constraints.Ordered, V any](m map[K]V) KeyVals[K, V] {
 	return sorted
 }
 
-type sortable[T constraints.Ordered] []T
+type sortable[T Ordered] []T
 
 func (x sortable[T]) Len() int               { return len(x) }
 func (x sortable[T]) Less(i int, j int) bool { return x[i] < x[j] }
