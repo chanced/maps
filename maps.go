@@ -25,11 +25,11 @@ type KeyValue[K Ordered, V any] struct {
 	Key   K
 	Value V
 }
-type KeyVals[K Ordered, V any] []KeyValue[K, V]
+type KeyValues[K Ordered, V any] []KeyValue[K, V]
 
 // Sort sorts a map by key, returning a slice of KV structs.
-func SortByKeys[K Ordered, V any](m map[K]V) KeyVals[K, V] {
-	sorted := make(KeyVals[K, V], len(m))
+func SortByKeys[K Ordered, V any](m map[K]V) KeyValues[K, V] {
+	sorted := make(KeyValues[K, V], len(m))
 	keys := SortKeys(m)
 	for i, k := range keys {
 		sorted[i] = KeyValue[K, V]{k, m[k]}
