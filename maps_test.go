@@ -41,7 +41,7 @@ func TestSortByKeys(t *testing.T) {
 		"p": 16,
 	}
 
-	expected := []maps.KeyVal[string, int]{
+	expected := []maps.KeyValue[string, int]{
 		{"a", 1},
 		{"b", 2},
 		{"c", 3},

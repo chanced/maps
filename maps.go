@@ -20,19 +20,19 @@ func SortKeys[K Ordered, V any](m map[K]V) []K {
 	return keys
 }
 
-// KeyVal is a Key Value pair.
-type KeyVal[K Ordered, V any] struct {
-	Key K
-	Val V
+// KeyValue is a Key Value pair.
+type KeyValue[K Ordered, V any] struct {
+	Key   K
+	Value V
 }
-type KeyVals[K Ordered, V any] []KeyVal[K, V]
+type KeyVals[K Ordered, V any] []KeyValue[K, V]
 
 // Sort sorts a map by key, returning a slice of KV structs.
 func SortByKeys[K Ordered, V any](m map[K]V) KeyVals[K, V] {
 	sorted := make(KeyVals[K, V], len(m))
 	keys := SortKeys(m)
 	for i, k := range keys {
-		sorted[i] = KeyVal[K, V]{k, m[k]}
+		sorted[i] = KeyValue[K, V]{k, m[k]}
 	}
 	return sorted
 }
