@@ -1,9 +1,8 @@
-package maps_test
+package maps
 
 import (
+	"reflect"
 	"testing"
-
-	"github.com/chanced/maps"
 )
 
 func TestSortKeys(t *testing.T) {
@@ -14,10 +13,30 @@ func TestSortKeys(t *testing.T) {
 	}
 
 	expected := []string{"a", "b", "c"}
-	for i, k := range maps.SortKeys(m) {
+	for i, k := range SortKeys(m) {
 		if k != expected[i] {
 			t.Errorf("expected %s, got %s", expected[i], k)
 		}
+	}
+}
+
+func TestMerge(t *testing.T) {
+	r := Merge([]map[string]int{
+		{"a": 1, "b": 2},
+		{"c": 3, "d": 4},
+		{"e": 5, "f": 6},
+	})
+
+	expected := map[string]int{
+		"a": 1,
+		"b": 2,
+		"c": 3,
+		"d": 4,
+		"e": 5,
+		"f": 6,
+	}
+	if reflect.DeepEqual(r, expected) == false {
+		t.Errorf("expected %v, got %v", expected, r)
 	}
 }
 
@@ -41,7 +60,7 @@ func TestSortByKeys(t *testing.T) {
 		"p": 16,
 	}
 
-	expected := []maps.KeyValue[string, int]{
+	expected := []KeyValue[string, int]{
 		{"a", 1},
 		{"b", 2},
 		{"c", 3},
@@ -59,7 +78,7 @@ func TestSortByKeys(t *testing.T) {
 		{"o", 15},
 		{"p", 16},
 	}
-	for i, k := range maps.SortByKeys(m) {
+	for i, k := range SortByKeys(m) {
 		if k != expected[i] {
 			t.Errorf("expected %v, got %v", expected[i], k)
 		}

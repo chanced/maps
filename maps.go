@@ -8,6 +8,16 @@ type Ordered interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~float32 | ~float64 | ~string
 }
 
+func Merge[K comparable, V any](m []map[K]V) map[K]V {
+	result := make(map[K]V)
+	for _, m := range m {
+		for k, v := range m {
+			result[k] = v
+		}
+	}
+	return result
+}
+
 // SortKeys sorts the keys of a map.
 func SortKeys[K Ordered, V any](m map[K]V) []K {
 	keys := make([]K, len(m))
